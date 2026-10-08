@@ -8,6 +8,9 @@ import { openUploadDialog } from "./upload.js"
 
 const $ = (id) => document.getElementById(id)
 const data = await loadData()
+const logoResponse = await fetch(new URL("./rotordeck-boot.png", import.meta.url))
+if (!logoResponse.ok) throw new Error("Could not load the Rotordeck boot logo")
+const rotordeckLogo = await fileToLogo(await logoResponse.blob())
 const PRO_GROUPS = data.groups.filter((g) => !["text", "logo"].includes(g.id))
 
 // ---- state (mirrored in the URL so a mix can be shared)
@@ -26,7 +29,10 @@ if (q.get("font") === "none") state.font = null
 // Logo follows the icon set (Betaflight sets share one logo; the CC0 sets have their own) unless chosen.
 const OWN_LOGO = ["cc0", "kenney"]
 const matchingLogo = (icons) => (OWN_LOGO.includes(icons) ? icons : "default")
-state.logo = ["default", ...OWN_LOGO].includes(q.get("logo")) ? q.get("logo") : matchingLogo(state.icons)
+// Existing shared mixes include icons; keep their original logo when no logo was specified.
+// Fresh mixes and font-only catalog links start with Rotordeck.
+state.logo = ["rotordeck", "default", ...OWN_LOGO].includes(q.get("logo"))
+  ? q.get("logo") : q.has("icons") ? matchingLogo(state.icons) : "rotordeck"
 for (const g of PRO_GROUPS) {
   const v = q.get(`g.${g.id}`)
   if (data.iconsetById.has(v)) state.groups[g.id] = v
@@ -35,14 +41,15 @@ for (const g of PRO_GROUPS) {
 function mixOptions() {
   const sources = {}
   if (state.pro) Object.assign(sources, Object.fromEntries(Object.entries(state.groups).filter(([, v]) => v)))
-  if (state.logo !== "custom") sources.logo = state.logo
+  if (!["custom", "rotordeck"].includes(state.logo)) sources.logo = state.logo
   return {
     font: state.font,
     mode: state.mode,
     effect: state.effect,
     base: state.icons,
     sources,
-    logo: state.logo === "custom" ? state.customLogo : null,
+    logo: state.logo === "rotordeck" ? rotordeckLogo : state.logo === "custom" ? state.customLogo : null,
+    logoName: state.logo === "rotordeck" ? "Rotordeck" : null,
   }
 }
 let current = compose(data, mixOptions())
@@ -86,6 +93,7 @@ const setOptions = (sel, first) => {
   for (const s of data.iconsets) sel.add(new Option(s.name, s.id))
 }
 setOptions($("icons"))
+$("logo").add(new Option("Rotordeck — default", "rotordeck"))
 $("logo").add(new Option("Betaflight", "default"))
 $("logo").add(new Option("OSD Fonts (CC0)", "cc0"))
 $("logo").add(new Option("Kenney 1-Bit (CC0)", "kenney"))

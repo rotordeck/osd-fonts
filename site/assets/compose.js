@@ -142,11 +142,11 @@ export function compose(data, { font = null, mode = "small", base = "default", s
 }
 
 /** Where each character of a composed font came from, for the character sheet. */
-export function provenance(data, { font = null, base = "default", sources = {}, logo = null }) {
+export function provenance(data, { font = null, base = "default", sources = {}, logo = null, logoName = null }) {
   const name = (id) => data.iconsetById.get(id)?.name
   return Array.from({ length: GLYPHS }, (_, c) => {
     const group = data.groupOf[c]
-    if (group === "logo" && logo) return "Custom logo"
+    if (group === "logo" && logo) return logoName ?? "Custom logo"
     if (group === "text" && font?.glyphs[c]) return font.name
     if (group === "text" && sources.text) return name(sources.text)
     return name(sources[group]) ?? name(base)
@@ -160,7 +160,7 @@ export const isPublicDomain = (license) => /^(CC0|Public domain)/i.test(license 
  * License of a composed font, from the text font and every icon set it draws on.
  * Returns { publicDomain, text } where text is a sentence for the page.
  */
-export function licenseSummary(data, { font = null, base = "default", sources = {}, logo = null }) {
+export function licenseSummary(data, { font = null, base = "default", sources = {}, logo = null, logoName = null }) {
   const used = new Set([base])
   for (const [group, id] of Object.entries(sources)) if (id && !(group === "logo" && logo)) used.add(id)
   const sets = [...used].map((id) => data.iconsetById.get(id)).filter(Boolean)
@@ -168,13 +168,13 @@ export function licenseSummary(data, { font = null, base = "default", sources = 
   const textPD = font ? isPublicDomain(font.license) : iconsPD
   const letters = font ? `Letters: ${font.name}, ${font.license}${font.author ? ` (${font.author})` : ""}.` : ""
   const icons = sets.map((s) => `${s.name} (${s.license})`).join(", ")
-  if (iconsPD && textPD) {
+  if (iconsPD && textPD && !logoName) {
     return {
       publicDomain: true,
       text: `This whole font is public domain (CC0): ${font ? font.name + " letters, " : ""}${sets.map((s) => s.name).join(" + ")} icons${logo ? " and your own logo" : " and logo"}. Use it for anything, no credit needed.`,
     }
   }
-  return { publicDomain: false, text: `${letters} Icons${logo ? "" : " and logo"}: ${icons}.`.trim() }
+  return { publicDomain: false, text: `${letters} Icons${logo ? "" : " and logo"}: ${icons}.${logoName ? ` Logo: ${logoName} artwork (license not specified).` : ""}`.trim() }
 }
 
 export const fileName = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "osd-font"

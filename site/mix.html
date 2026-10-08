@@ -5,6 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Mix fonts &amp; icons · OSD Fonts</title>
 <meta name="description" content="Combine any retro text font with Betaflight OSD icon sets and a boot logo, preview it on a live OSD, then download the .mcm or upload it to your flight controller.">
+<meta property="og:title" content="Mix fonts &amp; icons · OSD Fonts">
+<meta property="og:description" content="Combine any retro text font with Betaflight OSD icon sets and a boot logo, preview it on a live OSD, then download the .mcm or upload it.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="OSD Fonts">
+<meta property="og:url" content="https://over9kfpv.github.io/osd-fonts/mix.html">
+<meta property="og:image" content="https://over9kfpv.github.io/osd-fonts/og/mix.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="A retro font mixed with an OSD icon set in a Betaflight font grid">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://over9kfpv.github.io/osd-fonts/mix.html">
 <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -36,7 +46,7 @@
   <section class="page-head">
     <p class="eyebrow">Mix your own</p>
     <h1>One font, your icons</h1>
-    <p class="lede">Take the letters from any retro font and the symbols from a Betaflight icon set, add the Betaflight logo or your own. Turn on <b>Pro</b> to take battery, horizon, arrows and the rest each from a different set.</p>
+    <p class="lede">Take the letters from any retro font and the symbols from a Betaflight icon set, start with the Rotordeck boot logo or choose your own. Turn on <b>Pro</b> to take battery, horizon, arrows and the rest each from a different set.</p>
   </section>
 
   <section class="mixer" aria-label="Mixer">
@@ -53,6 +63,13 @@
     </div>
 
     <div class="bundle">
+      <div class="field">
+        <label for="logo">Boot logo <span class="about">Rotordeck is the default</span></label>
+        <select id="logo"></select>
+        <input type="file" id="logo-file" accept="image/*,.bmp" hidden>
+        <canvas class="logo-preview" id="logo-preview" width="288" height="72" aria-label="Boot logo preview"></canvas>
+        <p class="status" id="logo-status"></p>
+      </div>
       <div class="field">
         <label for="font">Letters from</label>
         <input type="search" id="font-search" placeholder="Filter fonts…" autocomplete="off" aria-label="Filter the font list">
@@ -73,13 +90,7 @@
         <label for="icons">Icons from</label>
         <select id="icons"></select>
       </div>
-      <div class="field">
-        <label for="logo">Logo</label>
-        <select id="logo"></select>
-        <input type="file" id="logo-file" accept="image/*,.bmp" hidden>
-        <canvas class="logo-preview" id="logo-preview" width="288" height="72" aria-label="Boot logo preview"></canvas>
-        <p class="status" id="logo-status"></p>
-      </div>
+
 
       <hr class="divider">
       <label class="switch"><input type="checkbox" id="pro"> Pro: pick icons per group</label>

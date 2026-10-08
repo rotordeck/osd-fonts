@@ -53,6 +53,26 @@ async function check(name, fn) {
   }
 }
 
+await check("mixer: Rotordeck default boot logo and shared reload", async (page) => {
+  await page.goto(base + "mix.html")
+  await page.waitForSelector("#sheet .ch")
+  assert.equal(await page.inputValue("#logo"), "rotordeck")
+  assert.equal(new URL(page.url()).searchParams.get("logo"), "rotordeck")
+  const { font } = await downloadMcm(page, "#download")
+  const logo = await page.evaluate(async () => {
+    const { fileToLogo } = await import("./assets/logo.js")
+    return (await fileToLogo(await (await fetch("./assets/rotordeck-boot.png")).blob())).map(g => Array.from(g))
+  })
+  assert.deepEqual(font.slice(160).map(g => Array.from(g)), logo)
+  await page.reload()
+  await page.waitForSelector("#sheet .ch")
+  assert.deepEqual((await downloadMcm(page, "#download")).font, font)
+  await page.selectOption("#icons", "cc0")
+  assert.equal(await page.inputValue("#logo"), "rotordeck")
+  assert.match(await page.textContent("#license"), /Rotordeck artwork/)
+  assert.doesNotMatch(await page.textContent("#license"), /whole font is public domain/)
+})
+
 await check("browse: gallery, facets, look-alikes, demo and download", async (page) => {
   await page.goto(base + "index.html")
   await page.waitForSelector("#grid .card")
@@ -103,7 +123,7 @@ await check("mix: whole set, then per-group Pro mode, share link", async (page) 
   assert.deepEqual(font[0xc0], iconset("default")[0xc0], "Betaflight logo")
   assert.deepEqual(
     (await page.locator("#logo option").allTextContents()).map((t) => t.trim()),
-    ["Betaflight", "OSD Fonts (CC0)", "Kenney 1-Bit (CC0)", "Custom image (288×72)…"],
+    ["Rotordeck — default", "Betaflight", "OSD Fonts (CC0)", "Kenney 1-Bit (CC0)", "Custom image (288×72)…"],
   )
   const url = new URL(page.url())
   assert.equal(url.searchParams.get("g.battery"), "vision")

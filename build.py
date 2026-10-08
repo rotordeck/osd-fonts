@@ -5,6 +5,8 @@
 site/data/fonts.json      catalog + raw 1-bit text glyphs (the browser places them in cells)
 site/data/iconsets.json   icon sets (256 packed glyphs each) + symbol groups
 site/f/<id>.html          one crawlable page per font, with a PNG preview
+site/f/<id>-card.png      1200x630 social share card per font
+site/og/*.png             social share cards for the top-level pages
 """
 import html
 import json
@@ -17,6 +19,7 @@ from PIL import Image
 
 from osdfont.glyphs import (build_font, fingerprint, fits, is_native, legibility, load_source,
                             reference_shapes, size_of)
+from osdfont import card
 from osdfont.traits import describe
 from osdfont.mcm import BLACK, CH, CW, GLYPHS, TRANSPARENT, WHITE, pack, read_mcm
 
@@ -106,7 +109,14 @@ FONT_PAGE = """<!doctype html>
 <meta name="description" content="{desc}">
 <meta property="og:title" content="{name} · Betaflight OSD font">
 <meta property="og:description" content="{desc}">
-<meta property="og:image" content="{base}f/{id}.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="OSD Fonts">
+<meta property="og:url" content="{base}f/{id}.html">
+<meta property="og:image" content="{base}f/{id}-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="{name} letters on a Betaflight OSD font grid">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="{base}f/{id}.html">
 <link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -161,6 +171,71 @@ def font_page(e, glyphs, native, png_size):
                             collection=COLLECTIONS[e["collection"]], meta=meta, pw=png_size[0], ph=png_size[1])
 
 
+CARD_GRID = dict(x=660, y=27, cols=14, scale=3)
+CARD_FIRST = 20  # 140 cells: 20..159, symbols around the letters, stopping before the logo
+
+
+def title_runs(text, chars, glyphs):
+    """Wrap a title into lines of one font's OSD letters."""
+    text = "".join(ch if 0x20 <= ord(ch) <= 0x5F else " " for ch in text.upper())
+    lines = [text] if len(text) <= 12 else card.wrap(text, max(12, (len(text) + 2) // 2))
+    return [[(line, chars, size_of(glyphs)[0])] for line in lines[:3]]
+
+
+def font_card(e, glyphs, chars, label, path):
+    w, h = size_of(glyphs)
+    codes = list(range(CARD_FIRST, CARD_FIRST + 140))
+    first = next((ord(ch) for ch in e["name"].upper() if ord(ch) in codes and ord(ch) > 0x40), 0x41)
+    lic = "license unknown" if e["license"].lower() == "unknown" else e["license"]
+    sub = f"Betaflight OSD font. {w}x{h} px letters, {lic}"
+    card.draw(path, title_runs(e["name"], chars, glyphs), sub, label,
+              dict(CARD_GRID, cells=[chars[c] for c in codes], numbers=codes, selected=codes.index(first)))
+
+
+def page_cards(fonts, built, iconsets, label):
+    """Cards for index, mix, editor and install, in site/og/."""
+    out = os.path.join(SITE, "og")
+    os.makedirs(out, exist_ok=True)
+    by_id = {e["id"]: (e, g, c) for (e, g, _), c in zip(fonts, built)}
+    # Titles use the featured fonts that read most like the stock Betaflight letters.
+    featured = [by_id[e["id"]] for e, _, score in sorted(fonts, key=lambda f: -f[2]) if e.get("featured")][:8] \
+        or list(by_id.values())
+    pick = lambda i: featured[i % len(featured)]
+    run = lambda text, i: (text, pick(i)[2], size_of(pick(i)[1])[0])
+    grid = dict(CARD_GRID)
+
+    # Home: every cell a letter from a different font.
+    letters = [ord(ch) for ch in "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"]
+    cells = [built[i * 7 % len(built)][letters[i % len(letters)]] for i in range(140)]
+    card.draw(os.path.join(out, "home.png"),
+              [[run("GIVE YOUR", 0)], [run("OSD A", 1)], [run("RETRO FONT.", 2)]],
+              f"{len(fonts)} free retro fonts for the Betaflight analog OSD", label,
+              dict(grid, cells=cells, numbers=[letters[i % len(letters)] for i in range(140)], selected=62))
+
+    vga = by_id.get("ibm-vga-8x16", featured[0])
+    sets = {s["id"]: s["chars"] for s in iconsets}
+    # Mix: one font's letters over the public-domain icon set.
+    mixed = build_font(vga[1], sets.get("cc0", sets["default"]), "small")
+    codes = list(range(CARD_FIRST, CARD_FIRST + 140))
+    card.draw(os.path.join(out, "mix.png"), [[run("MIX FONTS", 0)], [run("& ICONS", 1)]],
+              "Any text font, any Betaflight icon set, one .mcm file", label,
+              dict(grid, cells=[mixed[c] for c in codes], numbers=codes, selected=codes.index(0x41)))
+
+    # Editor: the character map as the editor shows it. 24 columns from 16, so the boot logo
+    # (160-255, 24 characters wide) assembles the way Betaflight lays it out.
+    codes = list(range(16, 256))
+    vrun = lambda text: (text, vga[2], size_of(vga[1])[0])
+    card.draw(os.path.join(out, "editor.png"), [[vrun("MAX7456")], [vrun("FONT")], [vrun("EDITOR")]],
+              "Draw and upload OSD fonts in the browser", label,
+              dict(x=552, y=(card.H - 10 * 39) // 2, cols=24, scale=2, gap=3, cells=[vga[2][c] for c in codes], numbers=None, selected=codes.index(0x41)))
+
+    # Install: the letters, ready to go.
+    codes = list(range(CARD_FIRST, CARD_FIRST + 140))
+    card.draw(os.path.join(out, "install.png"), [[run("INSTALL", 3)], [run("A FONT", 4)]],
+              "With Betaflight Configurator or straight from the browser over USB", label,
+              dict(grid, cells=[pick(5)[2][c] for c in codes], numbers=codes, selected=codes.index(0x41)))
+
+
 def main():
     iconsets = load_iconsets()
     stock = [s for s in iconsets if s["id"] == "default"][0]["chars"]
@@ -170,14 +245,17 @@ def main():
 
     os.makedirs(os.path.join(SITE, "data"), exist_ok=True)
     os.makedirs(os.path.join(SITE, "f"), exist_ok=True)
-    out_fonts = []
+    out_fonts, built = [], []
     traits = describe(fonts)
+    label = [g for e, g, _ in fonts if e["id"] == "ibm-vga-8x16"][0]
     for (e, glyphs, score), t in zip(fonts, traits):
         native = is_native(glyphs)
         w, h = size_of(glyphs)
         chars = build_font(glyphs, stock, "small")
         png = os.path.join(SITE, "f", f"{e['id']}.png")
         preview_png(chars, png)
+        font_card(e, glyphs, chars, label, os.path.join(SITE, "f", f"{e['id']}-card.png"))
+        built.append(chars)
         with open(os.path.join(SITE, "f", f"{e['id']}.html"), "w") as f:
             f.write(font_page(e, glyphs, native, Image.open(png).size))
         out_fonts.append({
@@ -196,6 +274,7 @@ def main():
             "iconsets": [{"id": s["id"], "name": s["name"], "license": s["license"], "glyphs": pack(s["chars"])}
                          for s in iconsets],
         }, f, separators=(",", ":"))
+    page_cards(fonts, built, iconsets, label)
     pages = ["", "mix.html", "editor.html", "install.html"] + [f"f/{e['id']}.html" for e, _, _ in fonts]
     with open(os.path.join(SITE, "sitemap.xml"), "w") as f:
         f.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n')
