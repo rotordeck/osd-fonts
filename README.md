@@ -64,7 +64,7 @@ npm run test:browser               # drives every page in a real browser
 
 `UPDATE_FIXTURES=1 uv run pytest` refreshes `tests/fixtures/render_cases.json` after a deliberate change to glyph placement. The JS tests use that fixture to check that the site renders exactly like `build.py`.
 
-Pushing to `main` runs the tests, builds the site and deploys it to GitHub Pages (`.github/workflows/pages.yml`).
+Pushing to `main` runs the tests and builds the site (`.github/workflows/ci.yml`). The live site is assembled and hosted by [rotordeck/website](https://github.com/rotordeck/website) on rotordeck.com.
 
 ## License
 Code: MIT. Fonts keep their own licenses (see `fonts/LICENSES.md`); Betaflight icon sets are GPL-3.0, the OSD Fonts CC0 icon set is public domain. Also by us: [Stickbeats](https://rotordeck.com/stickbeats/), sound themes for EdgeTX radios.
