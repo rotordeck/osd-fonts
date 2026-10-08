@@ -1,6 +1,6 @@
 # OSD Fonts: retro fonts for the Betaflight analog OSD
 
-**Site:** https://over9kfpv.github.io/osd-fonts/
+**Site:** https://rotordeck.com/osd-fonts/
 
 278 retro bitmap fonts, converted for the Betaflight analog OSD (MAX7456, 12×18 characters):
 
@@ -67,4 +67,4 @@ npm run test:browser               # drives every page in a real browser
 Pushing to `main` runs the tests, builds the site and deploys it to GitHub Pages (`.github/workflows/pages.yml`).
 
 ## License
-Code: MIT. Fonts keep their own licenses (see `fonts/LICENSES.md`); Betaflight icon sets are GPL-3.0, the OSD Fonts CC0 icon set is public domain. Also by us: [Stickbeats](https://over9kfpv.github.io/stickbeats/), sound themes for EdgeTX radios.
+Code: MIT. Fonts keep their own licenses (see `fonts/LICENSES.md`); Betaflight icon sets are GPL-3.0, the OSD Fonts CC0 icon set is public domain. Also by us: [Stickbeats](https://rotordeck.com/stickbeats/), sound themes for EdgeTX radios.

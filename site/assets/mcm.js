@@ -95,7 +95,7 @@ export function serializeH(font, name = "font") {
   const bytes = fontToBytes(font, FIELD)
   const id = name.replace(/\.[^.]+$/, "").replace(/[^A-Za-z0-9_]/g, "_") || "font"
   let out = `// MAX7456 OSD font, 256 glyphs of 12x18, 64 bytes per glyph (54 used).\n`
-  out += `// Made with OSD Fonts: https://over9kfpv.github.io/osd-fonts/\n\n#pragma once\n\n`
+  out += `// Made with OSD Fonts: https://rotordeck.com/osd-fonts/\n\n#pragma once\n\n`
   out += `const unsigned char ${id}[${bytes.length}] = {\n`
   for (let i = 0; i < bytes.length; i += 16) {
     const row = Array.from(bytes.slice(i, i + 16), (b) => "0x" + b.toString(16).padStart(2, "0"))

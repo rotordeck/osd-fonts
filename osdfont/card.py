@@ -110,7 +110,7 @@ def wrap(text, chars_per_line):
     return lines + [cur] if cur else lines
 
 
-def draw(path, title_lines, sub, label_glyphs, grid, footer="OVER9KFPV.GITHUB.IO/OSD-FONTS"):
+def draw(path, title_lines, sub, label_glyphs, grid, footer="ROTORDECK.COM/OSD-FONTS"):
     """Left: eyebrow, title, subtitle (wrapped to the column), footer. Right: the glyph grid
     (dict of Card.grid args). The footer may run under a grid that ends above it."""
     c = Card()

@@ -25,7 +25,7 @@ from osdfont.mcm import BLACK, CH, CW, GLYPHS, TRANSPARENT, WHITE, pack, read_mc
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 SITE = os.path.join(ROOT, "site")
-BASE_URL = "https://over9kfpv.github.io/osd-fonts/"
+BASE_URL = "https://rotordeck.com/osd-fonts/"
 COLLECTIONS = {
     "pc": "IBM PC ROM fonts",
     "vault": "Terminal & game fonts",
@@ -129,7 +129,7 @@ FONT_PAGE = """<!doctype html>
 <div class="wrap">
   <header class="top">
     <a class="logo" href="../index.html"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="5" width="28" height="22" rx="6" fill="currentColor"/><path fill="var(--ground)" d="M13 10h6v2h-6zM11 12h2v10h-2zM19 12h2v10h-2zM13 16h6v2h-6z"/><circle cx="25.5" cy="9.5" r="1.7" fill="var(--accent)"/></svg>OSD Fonts</a>
-    <nav class="nav" aria-label="Main"><a href="../index.html#fonts">Retro fonts</a><a href="../mix.html">Mix fonts &amp; icons</a><a href="../editor.html">Font editor</a><a href="../install.html">Install</a><a href="https://github.com/Over9kfpv/osd-fonts">GitHub</a></nav>
+    <nav class="nav" aria-label="Main"><a href="../index.html#fonts">Retro fonts</a><a href="../mix.html">Mix fonts &amp; icons</a><a href="../editor.html">Font editor</a><a href="../install.html">Install</a><a href="https://github.com/rotordeck/osd-fonts">GitHub</a></nav>
   </header>
   <main class="font-page">
     <div>
@@ -145,7 +145,7 @@ FONT_PAGE = """<!doctype html>
   </main>
   <footer class="site">
     <p>Free downloads · Open source. Each font keeps its own license; icons come from Betaflight Configurator (GPL-3.0).</p>
-    <p><a href="../install.html">How to install</a> · <a href="https://github.com/Over9kfpv/osd-fonts">Source on GitHub</a> · <a href="https://over9kfpv.github.io/stickbeats/">Stickbeats</a></p>
+    <p><a href="../install.html">How to install</a> · <a href="https://github.com/rotordeck/osd-fonts">Source on GitHub</a> · <a href="https://rotordeck.com/stickbeats/">Stickbeats</a></p>
   </footer>
 </div>
 <script type="module" src="../assets/theme.js"></script>
