@@ -66,5 +66,33 @@ npm run test:browser               # drives every page in a real browser
 
 Pushing to `main` runs the tests and builds the site (`.github/workflows/ci.yml`). The live site is assembled and hosted by [rotordeck/website](https://github.com/rotordeck/website) on rotordeck.com.
 
+## Frequently asked questions
+
+### How do I change the font on my Betaflight OSD?
+
+Pick a font on [rotordeck.com/osd-fonts](https://rotordeck.com/osd-fonts/), download the `.mcm` and upload it with Betaflight Configurator's Font Manager, or flash it straight from the browser. See the [install guide](https://rotordeck.com/osd-fonts/install.html).
+
+### Can I edit a Betaflight `.mcm` font or make my own?
+
+Yes. The Editor opens any `.mcm` or `.h` font with pixel tools, a tracing overlay and logo BMP import/export, and saves your work automatically.
+
+### Does this work with HDZero, Walksnail or DJI?
+
+These fonts are for the analog OSD (MAX7456, 12×18 characters). Digital systems use their own font formats.
+
+### Can I use the fonts in my own project?
+
+Each font keeps its own licence (see `fonts/LICENSES.md`). Pick the CC0 letters and the CC0 icon set for a font that is public domain as a whole.
+
+## More free FPV tools from Rotordeck
+
+- [Sticklink](https://rotordeck.com/sticklink/): live stick and telemetry overlays for OBS, straight from an EdgeTX radio
+- [Stickbeats](https://rotordeck.com/stickbeats/): free EdgeTX sound themes and voice packs, with a mixer to record your own
+- [Betasplash](https://rotordeck.com/betasplash/): make a Betaflight OSD boot logo with your callsign
+- [bf](https://rotordeck.com/bf/): configure Betaflight from the command line, for humans and AI agents
+- [Rotordeck skills](https://github.com/rotordeck/skills): Agent Skills that teach Claude Code and other agents to set up Betaflight
+
+All of them in one place: the [Rotordeck Toy Box](https://rotordeck.com/toybox/).
+
 ## License
 Code: MIT. Fonts keep their own licenses (see `fonts/LICENSES.md`); Betaflight icon sets are GPL-3.0, the OSD Fonts CC0 icon set is public domain. Also by us: [Stickbeats](https://rotordeck.com/stickbeats/), sound themes for EdgeTX radios.
