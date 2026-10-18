@@ -27,7 +27,7 @@ const state = {
 }
 if (q.get("font") === "none") state.font = null
 // Logo follows the icon set (Betaflight sets share one logo; the CC0 sets have their own) unless chosen.
-const OWN_LOGO = ["cc0", "kenney"]
+const OWN_LOGO = ["cc0", "kenney", "ukraine"]
 const matchingLogo = (icons) => (OWN_LOGO.includes(icons) ? icons : "default")
 // Existing shared mixes include icons; keep their original logo when no logo was specified.
 // Fresh mixes and font-only catalog links start with Rotordeck.
@@ -97,6 +97,7 @@ $("logo").add(new Option("Rotordeck — default", "rotordeck"))
 $("logo").add(new Option("Betaflight", "default"))
 $("logo").add(new Option("OSD Fonts (CC0)", "cc0"))
 $("logo").add(new Option("Kenney 1-Bit (CC0)", "kenney"))
+$("logo").add(new Option("Ukraine (CC0)", "ukraine"))
 $("logo").add(new Option("Custom image (288×72)…", "custom"))
 
 const proBox = $("pro-groups")

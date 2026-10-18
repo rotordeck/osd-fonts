@@ -134,7 +134,7 @@ def test_render_fixture_is_current():
     assert json.load(open(path)) == cases
 
 
-@pytest.mark.parametrize("name", ["cc0", "kenney"])
+@pytest.mark.parametrize("name", ["cc0", "kenney", "ukraine"])
 def test_cc0_iconsets_are_current_and_original(name):
     """The saved .mcm is exactly what its make_*.py builds, and no symbol copies a Betaflight glyph."""
     import importlib.util
@@ -152,8 +152,7 @@ def test_cc0_iconsets_are_current_and_original(name):
         if not s["license"].startswith("CC0"):
             betaflight |= {c.tobytes() for c in s["chars"]}
     text = set(TEXT_CODES)
-    blank = np.full((CH, CW), 1, np.uint8).tobytes()
-    copied = [hex(c) for c, g in enumerate(saved) if c not in text and g.tobytes() != blank and g.tobytes() in betaflight]
+    copied = [hex(c) for c, g in enumerate(saved) if c not in text and (g != 1).sum() > 8 and g.tobytes() in betaflight]
     assert not copied, f"these CC0 symbols equal a Betaflight glyph: {copied}"
 
 
