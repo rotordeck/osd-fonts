@@ -7,7 +7,7 @@
 - **IBM PC ROM fonts** (167): VGA, EGA, CGA, BIOS, Tandy, Amstrad, Toshiba, Compaq…, from VileR's Ultimate Oldschool PC Font Pack
 - **Terminal & game fonts** (24): Terminus, Spleen, unscii, Cozette, GNU Unifont, ZX Spectrum, ProggyClean…
 - **CC0 collection** (45): public-domain fonts from OpenGameArt: GrafX2 fonts, Kenney's KenPixel, Public Pixel, Boxy Bold, Tom Thumb…
-- **OSD Fonts CC0 icon set**: every symbol and the logo drawn from scratch (`iconsets/make_cc0.py`), so CC0 letters + CC0 icons = a font that is public domain as a whole
+- **Three CC0 icon sets**: OSD Fonts CC0 (every symbol and the logo drawn from scratch, `iconsets/make_cc0.py`), Kenney 1-Bit (from Kenney's 1-Bit Pack) and Ukraine (tryzub logo, sunflower battery, Cyrillic unit labels). CC0 letters + a CC0 icon set = a font that is public domain as a whole. Details in [`iconsets/README.md`](iconsets/README.md)
 - **Demoscene charsets** (42): C64 and Amiga-era fonts from old archives
 
 The site has four pages:
@@ -36,7 +36,7 @@ The browser builds every `.mcm` itself from the glyph data, so no generated font
 ```
 fonts/catalog.toml     one [[font]] per font: source file, loader settings, license, author, shortlist
 fonts/{pc,vault,cc0,demoscene}/   the source files
-iconsets/*.mcm         Betaflight Configurator fonts (GPL-3.0) used as icon sets
+iconsets/*.mcm         icon sets: ten Betaflight Configurator fonts (GPL-3.0) and three CC0 sets (cc0, kenney, ukraine)
 iconsets/groups.toml   symbol groups for the mixer, from Betaflight's osd_symbols.h
 osdfont/               Python converters (FON, BDF, pixel TTF, sheets) and .mcm I/O
 build.py               catalog + icon sets -> site/data/*.json, site/f/<id>.html + previews, sitemap
@@ -82,7 +82,7 @@ These fonts are for the analog OSD (MAX7456, 12×18 characters). Digital systems
 
 ### Can I use the fonts in my own project?
 
-Each font keeps its own licence (see `fonts/LICENSES.md`). Pick the CC0 letters and the CC0 icon set for a font that is public domain as a whole.
+Each font keeps its own licence (see `fonts/LICENSES.md`). Pick CC0 letters and one of the CC0 icon sets (OSD Fonts CC0, Kenney 1-Bit or Ukraine) for a font that is public domain as a whole.
 
 ## More free FPV tools from Rotordeck
 
@@ -95,4 +95,4 @@ Each font keeps its own licence (see `fonts/LICENSES.md`). Pick the CC0 letters 
 All of them in one place: the [Rotordeck Toy Box](https://rotordeck.com/toybox/).
 
 ## License
-Code: MIT. Fonts keep their own licenses (see `fonts/LICENSES.md`); Betaflight icon sets are GPL-3.0, the OSD Fonts CC0 icon set is public domain. Also by us: [Stickbeats](https://rotordeck.com/stickbeats/), sound themes for EdgeTX radios.
+Code: MIT. Fonts keep their own licenses (see `fonts/LICENSES.md`); Betaflight icon sets are GPL-3.0; the OSD Fonts CC0, Kenney 1-Bit and Ukraine icon sets are public domain (CC0). Also by us: [Stickbeats](https://rotordeck.com/stickbeats/), sound themes for EdgeTX radios.
