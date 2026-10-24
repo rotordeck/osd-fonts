@@ -13,6 +13,8 @@ though crediting the authors is kind.
 | `public-pixel/` | Public Pixel (TTF) | GGBotNet | OpenGameArt |
 | `boxy-bold/` | Boxy Bold, assembled from the pack's one-PNG-per-character "Standard" set (character N = ASCII 32+N) | Clint Bellanger | [Boxy Bold Font Split](https://opengameart.org/content/boxy-bold-font-split) |
 | `tom-thumb/` | Tom Thumb 3×5 (relicensed CC0 by its author, see the source page) | Robey Pointer, from a font by Brian Swetland | [Tom Thumb Tiny ASCII font](https://opengameart.org/content/tom-thumb-tiny-ascii-font-3x5) |
+| `pixel-operator/` | Pixel Operator, Operator 8, Mono, Mono 8 (TTF) | Jayvee Enaguas | [Font Library](https://fontlibrary.org/en/font/pixel-operator) |
+| `m5x7/` | m5x7 (TTF, CC0 per the author's itch.io page) | Daniel Linssen | [itch.io](https://managore.itch.io/m5x7) |
 | `minimal/` | Minimal 3×5, 5×5 mono, 5×7 (TTF) | — | OpenGameArt |
 | `mbf/` | MBF big 10×12 and small 7×7 | — | OpenGameArt |
 | `gnsh/` | gnsh bitmap font (white variant; the others are recolours) | gnsh | OpenGameArt |

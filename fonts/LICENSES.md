@@ -3,11 +3,13 @@
 | Folder | Source | License |
 |---|---|---|
 | `pc/` | [The Ultimate Oldschool PC Font Pack](https://int10h.org/oldschool-pc-fonts/) v2.2 by VileR (`.FON` bitmap versions) | CC BY-SA 4.0, see `pc/LICENSE.TXT` |
-| `vault/<id>/` | Terminal, programming and game fonts collected in *font-vault*; each folder keeps the upstream README with source URL and license notes | per font: MIT, OFL 1.1, CC0, CC BY 4.0, BSD-2-Clause, WTFPL, public domain, GPL-2.0+ with font exception, GPL-3.0 (ZX Spectrum Strict) |
+| `vault/<id>/` | Terminal, programming and game fonts collected in *font-vault*; each folder keeps the upstream README with source URL and license notes | per font: MIT, OFL 1.1, CC0, CC BY 4.0, BSD-2-Clause, WTFPL, public domain, the ttyp0 licence (MIT-style), GPL-2.0+ with font exception, GPL-3.0 (ZX Spectrum Strict) |
 | `cc0/` | Bitmap fonts from [OpenGameArt](https://opengameart.org/): GrafX2 fonts, Kenney, Public Pixel, Boxy Bold, Tom Thumb and more; see `cc0/README.md` | CC0 1.0 (public domain) |
 | `demoscene/` | Charsets from demoscene archives, via [BitmapFonts](https://github.com/ianhan/BitmapFonts) | Unknown |
 
 `catalog.toml` lists the license, author and source URL of every font; the site shows them next to each font.
+
+Added to `vault/`: Fixedsys Excelsior (public domain), X11 Misc Fixed (public domain), UW ttyp0 (ttyp0 licence; the Unicode `.bdf` files were generated from the upstream source with its own `genbdf`) and Ark Pixel 10px (MIT / OFL 1.1).
 
 ## Demoscene charsets
 Nobody knows who drew most of these; they were collected from demoscene archives over the years.
