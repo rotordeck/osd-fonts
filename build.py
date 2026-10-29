@@ -128,15 +128,15 @@ FONT_PAGE = """<!doctype html>
 <body>
 <div class="wrap">
   <header class="top">
-    <a class="logo" href="../index.html"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="5" width="28" height="22" rx="6" fill="currentColor"/><path fill="var(--ground)" d="M13 10h6v2h-6zM11 12h2v10h-2zM19 12h2v10h-2zM13 16h6v2h-6z"/><circle cx="25.5" cy="9.5" r="1.7" fill="var(--accent)"/></svg>OSD Fonts</a>
-    <nav class="nav" aria-label="Main"><a href="../index.html#fonts">Retro fonts</a><a href="../mix.html">Mix fonts &amp; icons</a><a href="../editor.html">Font editor</a><a href="../install.html">Install</a><a href="https://github.com/rotordeck/osd-fonts">GitHub</a></nav>
+    <a class="logo" href="../"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="5" width="28" height="22" rx="6" fill="currentColor"/><path fill="var(--ground)" d="M13 10h6v2h-6zM11 12h2v10h-2zM19 12h2v10h-2zM13 16h6v2h-6z"/><circle cx="25.5" cy="9.5" r="1.7" fill="var(--accent)"/></svg>OSD Fonts</a>
+    <nav class="nav" aria-label="Main"><a href="../#fonts">Retro fonts</a><a href="../mix.html">Mix fonts &amp; icons</a><a href="../editor.html">Font editor</a><a href="../install.html">Install</a><a href="https://github.com/rotordeck/osd-fonts">GitHub</a></nav>
   </header>
   <main class="font-page">
     <div>
       <p class="eyebrow">{collection}</p>
       <h1>{name}</h1>
       <p class="lede">{desc}</p>
-      <div class="ctas"><a class="btn accent" href="../index.html#{id}">Try it on the OSD</a><a class="btn ghost" href="../mix.html?font={id}">Mix with icons →</a><a class="btn ghost" href="../editor.html?font={id}">Edit</a></div>{pd}
+      <div class="ctas"><a class="btn accent" href="../#{id}">Try it on the OSD</a><a class="btn ghost" href="../mix.html?font={id}">Mix with icons →</a><a class="btn ghost" href="../editor.html?font={id}">Edit</a></div>{pd}
     </div>
     <div class="bundle">
       <img class="font-preview" src="{id}.png" width="{pw}" height="{ph}" alt="{name}: A to Z and 0 to 9 as they appear on the OSD">
